@@ -1,4 +1,4 @@
-package com.example.beenproject.common.exception;
+package com.example.beenproject.common;
 
 public interface ErrorMessage {
     String ILLEGAL_EX_MESSAGE = "잘못된 요청입니다.";
