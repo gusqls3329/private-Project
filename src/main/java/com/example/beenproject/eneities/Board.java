@@ -1,5 +1,6 @@
 package com.example.beenproject.eneities;
 
+import com.example.beenproject.eneities.enums.BoardStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +21,16 @@ public class Board {
     @JoinColumn(name = "iuser", nullable = false)
     private User user;
 
-    @Column(columnDefinition = "VARCHAR(30)")
+    @Column(columnDefinition = "VARCHAR(50)")
     private String title;
 
+    @Column(columnDefinition = "VARCHAR(5000)")
+    private String contents;
+
+    @Column(columnDefinition = "BIGINT UNSIGNED")
+    private Long view;
+
+    @Enumerated(EnumType.STRING)
+    private BoardStatus status;
 
 }
