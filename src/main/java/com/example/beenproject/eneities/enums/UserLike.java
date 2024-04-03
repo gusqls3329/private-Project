@@ -17,6 +17,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class UserLike extends CreatedAt {
+
     @Id
     @ManyToOne
     @JoinColumn(name = "iuser", nullable = false)

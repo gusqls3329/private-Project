@@ -1,9 +1,14 @@
 spring:
-  config:
-    activate:
-      on-profile: "BeenProject"
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 15MB
   datasource:
+    # driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/beenProject
+    username: root
+    password: green502
+    driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: create
