@@ -1,5 +1,6 @@
 package com.example.beenproject.eneities;
 
+import com.example.beenproject.eneities.enums.BoardCommentStatus;
 import com.example.beenproject.eneities.time.BaseAt;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,5 +29,6 @@ public class BoardComment extends BaseAt {
     @Column(columnDefinition = "VARCHAR(200)")
     private String contents;
 
-
+    @Enumerated
+    private BoardCommentStatus status;
 }
