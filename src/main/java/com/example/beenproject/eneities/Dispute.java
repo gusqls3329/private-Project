@@ -35,6 +35,4 @@ public class Dispute extends CreatedAt {
 
     @Enumerated
     private DisputeStatus status;
-
-
 }
