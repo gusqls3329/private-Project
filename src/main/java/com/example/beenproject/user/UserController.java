@@ -19,7 +19,7 @@ public class UserController {
     @Operation(summary = "회원가입", description = "회원가입"
     +"사진만 비 필수")
     public ResVo postSignup(SignUpDto dto){
-        return service.postSignup(dto);
+        return new ResVo(service.postSignup(dto));
     }
 
 }
