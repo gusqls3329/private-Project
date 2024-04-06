@@ -5,7 +5,7 @@ import com.example.beenproject.common.exception.base.BadInformationException;
 import com.example.beenproject.common.exception.checked.FileNotContainsDotException;
 import com.example.beenproject.common.utils.MyFileUtils;
 import com.example.beenproject.eneities.User;
-import com.example.beenproject.user.dto.SignUpDto;
+import com.example.beenproject.user.model.SignUpDto;
 import com.example.beenproject.user.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

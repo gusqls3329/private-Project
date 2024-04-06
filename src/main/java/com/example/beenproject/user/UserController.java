@@ -1,7 +1,7 @@
 package com.example.beenproject.user;
 
 import com.example.beenproject.common.ResVo;
-import com.example.beenproject.user.dto.SignUpDto;
+import com.example.beenproject.user.model.SignUpDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.example.beenproject.user.dto;
+package com.example.beenproject.user.model;
 
 import com.example.beenproject.common.ErrorMessage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
