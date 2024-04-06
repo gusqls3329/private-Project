@@ -1,14 +1,18 @@
 package com.example.beenproject.common.security.oauth2;
 
 
+import com.example.beenproject.common.SecurityProperties;
 import com.example.beenproject.common.security.JwtTokenProvider;
+import com.example.beenproject.common.security.SecurityUserDetails;
+import com.example.beenproject.common.security.model.SecurityPrincipal;
+import com.example.beenproject.common.utils.CookieUtils;
+import com.example.beenproject.user.model.UserModel;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -17,6 +21,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
+
+import static com.example.beenproject.common.security.oauth2.OAuth2AuthenticationRequestBasedOnCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
 
 @Slf4j
@@ -70,7 +76,6 @@ public class OAth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
             return UriComponentsBuilder.fromUriString(targetUrl)
                     .queryParam("access_token", at)
                     .queryParam("iuser", userModel.getIuser())
-                    .queryParam("auth", userModel.getAuth().getIauth())
                     .queryParam("result", 1L).encode()
                     .build()
                     .toUriString();

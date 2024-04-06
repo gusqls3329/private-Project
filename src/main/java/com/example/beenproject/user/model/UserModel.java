@@ -14,7 +14,7 @@ public class UserModel {
     private String email;
     private UserStatus status;
     private String nick;
-    private ProvideType provideType;
+    private String provideType;
     private String storedPic;
 
 }

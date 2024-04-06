@@ -10,9 +10,12 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication
+@ConfigurationPropertiesScan
+@EnableConfigurationProperties
+@EnableJpaRepositories
 @EnableJpaAuditing
-@EntityScan
 public class BeenProjectApplication {
 
 	public static void main(String[] args) {

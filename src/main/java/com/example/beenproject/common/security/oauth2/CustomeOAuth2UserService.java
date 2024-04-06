@@ -9,6 +9,7 @@ import com.example.beenproject.common.security.oauth2.userinfo.Oauth2UserInfoFac
 import com.example.beenproject.eneities.User;
 import com.example.beenproject.user.jpa.UserRepository;
 import com.example.beenproject.user.model.UserModel;
+import com.example.beenproject.user.model.UserSelDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -54,7 +55,7 @@ public class CustomeOAuth2UserService extends DefaultOAuth2UserService {
                     .iuser(userss.getIuser())
                     .email(userss.getEmail())
                     .nick(userss.getNick())
-                    .provideType(userss.getProvideType())
+                    .provideType(userss.getProvideType().name())
                     .storedPic(userss.getPic())
                     .status(userss.getStatus())
                     .build();
@@ -81,7 +82,7 @@ public class CustomeOAuth2UserService extends DefaultOAuth2UserService {
         return UserModel.builder()
                 .uid(oauth2UserInfo.getId())
                 .upw("social")
-                .provideType(SocialProviderType.KAKAO)
+                .provideType(SocialProviderType.KAKAO.name())
                 .build();
     }
 

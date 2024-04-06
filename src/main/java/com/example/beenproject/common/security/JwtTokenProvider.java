@@ -1,8 +1,10 @@
 package com.example.beenproject.common.security;
 
+import com.example.beenproject.common.SecurityProperties;
 import com.example.beenproject.common.exception.BadAuthorizationException;
 import com.example.beenproject.common.exception.ErrorCode;
 import com.example.beenproject.common.exception.base.WrapRuntimeException;
+import com.example.beenproject.common.security.model.SecurityPrincipal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,7 +15,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;

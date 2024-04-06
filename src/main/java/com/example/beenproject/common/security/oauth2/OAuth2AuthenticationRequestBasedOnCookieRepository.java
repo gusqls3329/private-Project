@@ -1,6 +1,6 @@
 package com.example.beenproject.common.security.oauth2;
 
-import com.team5.projrental.common.utils.CookieUtils;
+import com.example.beenproject.common.utils.CookieUtils;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
