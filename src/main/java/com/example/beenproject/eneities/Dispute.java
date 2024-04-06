@@ -22,13 +22,13 @@ public class Dispute extends CreatedAt {
     @JoinColumn(name = "iboard", nullable = false)
     private Board board;
 
-    @ManyToOne
-    @JoinColumn(name = "iuser", nullable = false)
-    private User ireported;
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ireported_user")
+    private User reportedUser;
 
-    @ManyToOne
-    @JoinColumn(name = "iuser", nullable = false)
-    private User ireporter;
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ireporter")
+    private User reporter;
 
     @Column(columnDefinition = "VARCHAR(500)")
     private String details;
