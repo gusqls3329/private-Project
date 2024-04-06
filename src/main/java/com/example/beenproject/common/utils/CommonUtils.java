@@ -1,6 +1,7 @@
 package com.example.beenproject.common.utils;
 
 
+import com.example.beenproject.common.exception.ErrorCode;
 import com.vane.badwordfiltering.BadWordFiltering;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static com.team5.projrental.common.Const.*;
-import static com.team5.projrental.common.exception.ErrorCode.*;
 
 @Component
 @Slf4j
@@ -148,49 +147,8 @@ public abstract class CommonUtils {
         }
     }
 
-    public static void ifCategoryNotContainsThrow(List<Categories> icategory) {
-        icategory.forEach(CommonUtils::ifCategoryNotContainsThrow);
-    }
-
-    /**
-     * Integer icategory 가
-     *
-     * @param icategory
-     */
-    public static void ifCategoryNotContainsThrow(Categories icategory) {
-//        Map<Integer, String> categories = CATEGORIES;
-//        return categories.keySet().stream().filter(k -> categories.get(k).equals(category))
-//                .findAny().orElseThrow(() -> new IllegalCategoryException(ILLEGAL_CATEGORY_EX_MESSAGE));
-//        if (icategory > CATEGORY_COUNT || icategory < 1) thrown(IllegalCategoryException.class, ILLEGAL_CATEGORY_EX_MESSAGE);
-
-        int mainCategory = icategory.getMainCategory();
-        int subCategory = icategory.getSubCategory();
-        if (subCategory < 0) thrown(IllegalCategoryException.class, ILLEGAL_CATEGORY_EX_MESSAGE);
-        if (mainCategory == 1 || mainCategory == 2 || mainCategory == 4) {
-            if (subCategory <= 4) {
-                return;
-            }
-        }
-        if (mainCategory == 3 || mainCategory == 5) {
-            if (subCategory <= 5) {
-                return;
-            }
-        }
-        thrown(IllegalCategoryException.class, ILLEGAL_CATEGORY_EX_MESSAGE);
 
 
-    }
-
-
-    public static void ifChatUserStatusThrowOrReturn(Integer istatus) {
-        if (istatus == DEL_I_STATUS) thrown(IllegalCategoryException.class, ILLEGAL_STATUS_EX_MESSAGE);
-    }
-
-    public static Integer ifPaymentMethodNotContainsThrowOrReturn(String paymentMethod) {
-        Map<Integer, String> paymentMethods = PAYMENT_METHODS;
-        return paymentMethods.keySet().stream().filter(k -> paymentMethods.get(k).equals(paymentMethod))
-                .findAny().orElseThrow(() -> new IllegalPaymentMethodException(ILLEGAL_PAYMENT_EX_MESSAGE));
-    }
 
     public static void ifAfterThrow(Class<? extends RuntimeException> ex, ErrorCode err, LocalDate expectedAfter,
                                     LocalDate expectedBefore) {
