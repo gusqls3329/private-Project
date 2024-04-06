@@ -1,5 +1,6 @@
 package com.example.beenproject.user;
 
+import com.example.beenproject.user.dto.SignUpDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,4 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
+    public int postSignup(SignUpDto dto){
+
+    }
 }
