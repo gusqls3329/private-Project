@@ -1,12 +1,15 @@
-package com.example.beenproject.common;
+package com.example.beenproject.common.exception.thrid;
 
+import com.example.beenproject.common.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
+
 @Getter
 @AllArgsConstructor
 public class ClientException extends RuntimeException{
+
     private ErrorCode errorCode;
     private String reason;
 
@@ -24,4 +27,6 @@ public class ClientException extends RuntimeException{
     public ErrorCode getErrorCode() {
         return errorCode;
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.beenproject.user.dto;
 
 import com.example.beenproject.common.ErrorMessage;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -11,6 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class SignUpDto {
+    @JsonIgnore
+    private int iuser;
+    @JsonIgnore
+    private String chPic;
+
     @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
     @Pattern(regexp =  "^\\w{4,15}$", message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
     @Length(min = 4, max = 15, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)

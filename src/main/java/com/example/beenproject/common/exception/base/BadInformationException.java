@@ -1,22 +1,22 @@
-package com.example.beenproject.common;
+package com.example.beenproject.common.exception.base;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+
+import com.example.beenproject.common.exception.ErrorCode;
 
 import java.util.Arrays;
-@Getter
-@AllArgsConstructor
-public class ClientException extends RuntimeException{
-    private ErrorCode errorCode;
-    private String reason;
 
-    public ClientException(String message) {
+/**
+ * 최상위
+ */
+public class BadInformationException extends RuntimeException{
+    private ErrorCode errorCode;
+    public BadInformationException(String message) {
         super(message);
         this.errorCode = Arrays.stream(ErrorCode.values()).filter(e -> e.getMessage().equals(message)).findFirst()
                 .orElse(ErrorCode.SERVER_ERR_MESSAGE);
     }
 
-    public ClientException(ErrorCode errorCode) {
+    public BadInformationException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
