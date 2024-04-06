@@ -13,6 +13,8 @@ public class Oauth2UserInfoFactory {
 
         return switch(socialProviderType){
             case KAKAO -> new KakaoOAuth2UserInfo(attrs);
+            case NAVER -> new NaverOAuth2UserInfo(attrs);
+
             default -> throw new IllegalArgumentException("Invalid Provider Type.");
         };
 
