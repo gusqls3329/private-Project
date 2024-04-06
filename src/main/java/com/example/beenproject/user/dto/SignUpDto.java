@@ -17,6 +17,9 @@ public class SignUpDto {
     @Length(min = 8, max = 20, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
     private String upw;
 
+    @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
+    @Pattern(regexp = "^\\S{0,20}$", message = ErrorMessage.NO_SUCH_USER_EX_MESSAGE)
+    @Length(max = 20, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
     private String nick;
     private String email;
     private int isEmail;

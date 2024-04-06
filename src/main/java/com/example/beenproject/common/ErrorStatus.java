@@ -8,6 +8,7 @@ public enum ErrorStatus {
     //
     CAN_NOT_BLANK_EX_MESSAGE(401),
     ILLEGAL_PROMISE_EX_MESSAGE(402),
+    NO_SUCH_USER_EX_MESSAGE(403),
     //
     SERVER_ERR_MESSAGE(500);
     private int code;
