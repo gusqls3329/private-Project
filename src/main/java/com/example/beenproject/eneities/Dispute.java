@@ -23,12 +23,16 @@ public class Dispute extends CreatedAt {
     private Board board;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ireported_user")
-    private User reportedUser;
+    @JoinColumn(name = "ireported", nullable = false)
+    private User ireported;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ireporter")
+    @JoinColumn(name = "ireporter", nullable = false)
     private User reporter;
+
+    @ManyToOne
+    @JoinColumn(name= "iadmin", nullable = false)
+    private Admin admin;
 
     @Column(columnDefinition = "VARCHAR(500)")
     private String details;
