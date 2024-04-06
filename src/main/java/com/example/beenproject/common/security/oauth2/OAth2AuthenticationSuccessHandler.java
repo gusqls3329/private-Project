@@ -60,33 +60,28 @@ public class OAth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
 
         SecurityUserDetails myUserDetails = (SecurityUserDetails) authentication.getPrincipal();
 
-        if (myUserDetails.getUserModel().getUpw() == null) {
-            SecurityPrincipal myPrincipal = myUserDetails.getSecurityPrincipal();
+        SecurityPrincipal myPrincipal = myUserDetails.getSecurityPrincipal();
 
-            String at = jwtTokenProvider.generateAccessToken(myPrincipal);
-            String rt = jwtTokenProvider.generateRefreshToken(myPrincipal);
+        String at = jwtTokenProvider.generateAccessToken(myPrincipal);
+        String rt = jwtTokenProvider.generateRefreshToken(myPrincipal);
 
-            //rt > cookie에 담을꺼임
-            int rtCookieMaxAge = appProperties.getJwt().getRefreshTokenCookieMaxAge();
-            cookieUtils.deleteCookie(response, "rt");
-            cookieUtils.setCookie(response, "rt", rt, rtCookieMaxAge);
+        //rt > cookie에 담을꺼임
+        int rtCookieMaxAge = appProperties.getJwt().getRefreshTokenCookieMaxAge();
+        cookieUtils.deleteCookie(response, "rt");
+        cookieUtils.setCookie(response, "rt", rt, rtCookieMaxAge);
 
-            UserModel userModel = myUserDetails.getUserModel();
-
-            return UriComponentsBuilder.fromUriString(targetUrl)
-                    .queryParam("access_token", at)
-                    .queryParam("iuser", userModel.getIuser())
-                    .queryParam("result", 1L).encode()
-                    .build()
-                    .toUriString();
-        }
         UserModel userModel = myUserDetails.getUserModel();
+
         return UriComponentsBuilder.fromUriString(targetUrl)
-                .queryParam("uid", userModel.getUid()).encode()
-                .queryParam("upw", userModel.getUpw()).encode()
-                .queryParam("provider-type", userModel.getProvideType()).encode()
+                .queryParam("access_token", at)
+                .queryParam("iuser", userModel.getIuser())
+                .queryParam("nm", userModel.getNick()).encode()
+                .queryParam("pic", userModel.getPic())
+                .queryParam("firebase_token", userModel.getFirebaseToken())
                 .build()
                 .toUriString();
+
+        //회원가입 시도해야함
 
 
     }
@@ -103,7 +98,7 @@ public class OAth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
                 .stream().anyMatch(redirectUri -> {
                     URI authorizedURI = URI.create(uri);
                     if (authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-                        && authorizedURI.getPort() == clientRedirectUri.getPort()) {
+                            && authorizedURI.getPort() == clientRedirectUri.getPort()) {
                         return true;
                     }
                     return false;

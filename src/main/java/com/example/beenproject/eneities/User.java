@@ -3,6 +3,7 @@ package com.example.beenproject.eneities;
 import com.example.beenproject.eneities.enums.ProvideType;
 import com.example.beenproject.eneities.enums.UserStatus;
 import com.example.beenproject.eneities.time.BaseAt;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,4 +40,7 @@ public class User extends BaseAt {
 
     @Column(columnDefinition = "VARCHAR(100)")
     private String pic;
+
+    @Column(length = 2100, name = "firebase_token")
+    private String firebaseToken;
 }

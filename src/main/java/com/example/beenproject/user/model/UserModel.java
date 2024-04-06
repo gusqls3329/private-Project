@@ -15,6 +15,9 @@ public class UserModel {
     private UserStatus status;
     private String nick;
     private String provideType;
-    private String storedPic;
+    private String pic;
+    private String firebaseToken;
+    private String createdAt;
+    private String updatedAt;
 
 }

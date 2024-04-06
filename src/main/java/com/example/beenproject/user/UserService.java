@@ -5,6 +5,8 @@ import com.example.beenproject.common.exception.base.BadInformationException;
 import com.example.beenproject.common.exception.checked.FileNotContainsDotException;
 import com.example.beenproject.common.utils.MyFileUtils;
 import com.example.beenproject.eneities.User;
+import com.example.beenproject.eneities.enums.ProvideType;
+import com.example.beenproject.eneities.enums.UserStatus;
 import com.example.beenproject.user.model.SignUpDto;
 import com.example.beenproject.user.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +43,10 @@ public class UserService {
         user.setEmail(dto.getEmail());
         user.setNick(dto.getNick());
         user.setPic(dto.getChPic());
+        user.setStatus(UserStatus.ACTIVE);
         user.setUid(dto.getUid());
         user.setUpw(dto.getUpw());
+        user.setProvideType(ProvideType.LOCAL);
         repository.save(user);
         return (int) Const.SUCCESS;
     }

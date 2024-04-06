@@ -16,6 +16,8 @@ public class SignUpDto {
     private int iuser;
     @JsonIgnore
     private String chPic;
+    @JsonIgnore
+    private String providerType;
 
     @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
     @Pattern(regexp =  "^\\w{4,15}$", message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
