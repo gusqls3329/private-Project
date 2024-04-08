@@ -8,7 +8,7 @@ public class NaverOAuth2UserInfo extends Oauth2UserInfo{
     }
 
     @Override
-    public String getId() {//"id": 카카오에서 넘어온 id값이 들어감
+    public String getId() {
         Map<String, Object> res = (Map<String, Object>)attributes.get("response");
         return res == null ? null : (String)res.get("id");
     }
