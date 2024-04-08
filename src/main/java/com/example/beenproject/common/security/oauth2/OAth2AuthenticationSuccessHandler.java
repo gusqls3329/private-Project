@@ -65,7 +65,6 @@ public class OAth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
         String at = jwtTokenProvider.generateAccessToken(myPrincipal);
         String rt = jwtTokenProvider.generateRefreshToken(myPrincipal);
 
-        //rt > cookie에 담을꺼임
         int rtCookieMaxAge = appProperties.getJwt().getRefreshTokenCookieMaxAge();
         cookieUtils.deleteCookie(response, "rt");
         cookieUtils.setCookie(response, "rt", rt, rtCookieMaxAge);
@@ -80,8 +79,6 @@ public class OAth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
                 .queryParam("firebase_token", userModel.getFirebaseToken())
                 .build()
                 .toUriString();
-
-        //회원가입 시도해야함
 
 
     }
@@ -102,6 +99,6 @@ public class OAth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSu
                         return true;
                     }
                     return false;
-                });//equalsIgnoreCase : 전부 소문자로 바꾼후 비교
+                });
     }
 }
