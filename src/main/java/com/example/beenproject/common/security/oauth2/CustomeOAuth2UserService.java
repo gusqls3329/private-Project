@@ -63,7 +63,7 @@ public class CustomeOAuth2UserService extends DefaultOAuth2UserService {
                 .uid(oauth2UserInfo.getId()).build();
 
         Optional<User> savedUser = userRepository.findByUidAndProvideType(dto.getUid(), ProvideType.valueOf(dto.getProviderType()));
-        if(!savedUser.isPresent()){//한번도 로그인한적이 없다면, 회원가입 처리
+        if(!savedUser.isPresent()){
             UserModel userModel = signupUser(oauth2UserInfo, socialProviderType);
         }
 
@@ -94,7 +94,7 @@ public class CustomeOAuth2UserService extends DefaultOAuth2UserService {
 
         SignUpDto dto = new SignUpDto();
         dto.setProviderType(socialProviderType.name());
-        dto.setUid(oauth2UserInfo.getId()); //소셜로그인에서 관리하는 pk값(유일값)이 넘어옴
+        dto.setUid(oauth2UserInfo.getId());
         dto.setUpw("social");
         dto.setNick(oauth2UserInfo.getName());
         String path = "user" + "/" + dto.getIuser();
