@@ -39,6 +39,7 @@ public class UserService {
                 throw new BadInformationException(BAD_PIC_EX_MESSAGE);
             }
         }
+
         User user = new User();
         user.setEmail(dto.getEmail());
         user.setNick(dto.getNick());
