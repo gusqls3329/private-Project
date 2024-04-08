@@ -23,17 +23,6 @@ public abstract class CommonUtils {
     public static List<String> filterWord;
 
 
-    //
-
-    /**
-     * 리턴을 위한 status 변환기
-     * <p>
-     * 문제 istatus : -34(delete_seller_from_canceled), -35(delete_seller_from_canceled,
-     * 14(delete_seller_from_canceled), 15(delete_seller_from_canceled)
-     *
-     * @param beforeStatus
-     * @return status for return
-     */
     public static int paymentStatusResolver(int beforeStatus) {
 
         return beforeStatus / 10 == 0 ? beforeStatus : beforeStatus / 10;
@@ -73,7 +62,7 @@ public abstract class CommonUtils {
     public static String ifContainsBadWordChangeThat(String word) {
         return badWordFiltering.change(word);
     }
-    //
+
 
     public static boolean notBetweenChecker(LocalDate refStartDate, LocalDate refEndDate,
                                             LocalDate newStartDate, LocalDate newEndDate) {
@@ -83,39 +72,18 @@ public abstract class CommonUtils {
     }
 
 
-    /**
-     * Integer n 이 null 이거나 0 이면 예외 유발
-     *
-     * @param ex
-     * @param err
-     * @param n
-     */
     public static void ifObjNullOrZeroThrow(Class<? extends RuntimeException> ex, ErrorCode err, Integer n) {
         if (n == null || n == 0) {
             thrown(ex, err);
         }
     }
 
-    /**
-     * boolean b 가 false 면 예외 발생.
-     *
-     * @param ex
-     * @param err
-     * @param b
-     */
+
     public static void ifFalseThrow(Class<? extends RuntimeException> ex, ErrorCode err, boolean b) {
         if (!b) thrown(ex, err);
     }
 
-    /**
-     * Stream<T> collection(리스트, 맵, 셋 등) 의 .size() 가 int limitNum 에 제공된 숫자보다 크면(초과) 예외 발생
-     *
-     * @param ex
-     * @param err
-     * @param collection
-     * @param limitNum
-     * @param <T>
-     */
+
     public static <T> void checkSizeIfOverLimitNumThrow(Class<? extends RuntimeException> ex, ErrorCode err, Stream<T> collection,
                                                         int limitNum) {
         if (collection.count() > limitNum) {
@@ -130,15 +98,7 @@ public abstract class CommonUtils {
         }
     }
 
-    /**
-     * Stream<T> collection(리스트, 맵, 셋 등) 의 .size() 가 int limitNum 에 제공된 숫자보다 작으면(미만) 예외 발생
-     *
-     * @param ex
-     * @param err
-     * @param collection
-     * @param limitNum
-     * @param <T>
-     */
+
     public static <T> void checkSizeIfUnderLimitNumThrow(Class<? extends RuntimeException> ex, ErrorCode err,
                                                          Stream<T> collection,
                                                          int limitNum) {
@@ -172,12 +132,6 @@ public abstract class CommonUtils {
         return false;
     }
 
-//    public static List<String> subEupmyun(String addr) {
-//        List<String> result = new ArrayList<>();
-//        Arrays.stream(addr.split(" ")).filter(s -> s.contains("읍") || s.contains("동") || s.contains("면"))
-//                .forEach(result::add);
-//        return result;
-//    }
 
     public static Integer getDepositFromPer(Integer price, Integer percent) {
         return (int) (price * percent * 0.01);
