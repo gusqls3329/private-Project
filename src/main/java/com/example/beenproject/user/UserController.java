@@ -47,7 +47,7 @@ public class UserController {
         return new ResVo(service.checkEmail(email));
     }
 
-    @PostMapping("/getFindUid")
+    @PostMapping("/id")
     @Operation(summary = "아이디 찾기", description = "이메일을 통한 아이디 찾기")
     @Validated
     public FindUidVo getFindUid(@Length(max = 30, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
@@ -55,6 +55,12 @@ public class UserController {
                                     @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
                                     String email){
         return service.getFindUid(email);
+    }
+
+    @PostMapping("/pw")
+    @Operation(summary = "비밀번호 변경", description = "이메일,아이디를 통한 비밀번호 변경")
+    public ResVo getFindUpw(@Validated FindUpwDto dto){
+        return new ResVo(service.getFindUpw(dto));
     }
 
 

@@ -23,6 +23,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import jakarta.servlet.http.Cookie;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
@@ -119,6 +120,18 @@ public class UserService {
         vo.setUid(user.getUid());
         return vo;
     }
+
+    public long getFindUpw(FindUpwDto dto){
+        User user = repository.findByUidAndEmail(dto.getUid(), dto.getEmail());
+        if(user ==null){
+            throw new ClientException(ErrorMessage.NO_SUCH_USER_EX_MESSAGE);
+        }
+        String pass = passwordEncoder.encode(dto.getUpw());
+        user.setUpw(pass);
+        repository.save(user);
+        return Const.SUCCESS;
+    }
+
 
     public int getSignOut(HttpServletResponse res) {
         try {
