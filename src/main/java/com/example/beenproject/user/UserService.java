@@ -1,9 +1,6 @@
 package com.example.beenproject.user;
 
-import com.example.beenproject.common.ClientException;
-import com.example.beenproject.common.Const;
-import com.example.beenproject.common.ErrorMessage;
-import com.example.beenproject.common.SecurityProperties;
+import com.example.beenproject.common.*;
 import com.example.beenproject.common.exception.base.BadInformationException;
 import com.example.beenproject.common.exception.checked.FileNotContainsDotException;
 import com.example.beenproject.common.security.JwtTokenProvider;
@@ -23,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.example.beenproject.common.exception.ErrorMessage.BAD_PIC_EX_MESSAGE;
+import static com.example.beenproject.common.exception.ErrorMessage.ILLEGAL_EX_MESSAGE;
 
 @Slf4j
 @Service
@@ -36,7 +34,7 @@ public class UserService {
     private final CookieUtils cookieUtils;
 
 
-    public long postSignup(SignUpDto dto){
+    public long postSignup(SignUpDto dto) {
 
         String password = passwordEncoder.encode(dto.getUpw());
         dto.setUpw(password);
@@ -66,17 +64,17 @@ public class UserService {
         return Const.SUCCESS;
     }
 
-    public SinginVo postSignin(HttpServletResponse http, SinginDto dto){
+    public SinginVo postSignin(HttpServletResponse http, SinginDto dto) {
         User user = repository.findByUid(dto.getUid());
         String pass = passwordEncoder.encode(dto.getUpw());
 
-        if(user == null){
+        if (user == null) {
             throw new ClientException(ErrorMessage.ILLEGAL_UID_MESSAGE);
         }
-        if(!pass.equals(user.getUpw())){
+        if (!pass.equals(user.getUpw())) {
             throw new ClientException(ErrorMessage.ILLEGAL_UPW_MESSAGE);
         }
-        if(user.getStatus() != UserStatus.ACTIVE){
+        if (user.getStatus() != UserStatus.ACTIVE) {
             throw new ClientException(ErrorMessage.NO_SUCH_USER_EX_MESSAGE);
 
 
@@ -98,4 +96,15 @@ public class UserService {
                 .iuser(user.getIuser())
                 .accesstoken(at).build();
     }
+
+    public Long checkEmail(String email) {
+        User user = repository.findByEmail(email);
+        if (user == null || user.getStatus() == UserStatus.DELETED) {
+            return Const.SUCCESS;
+        }
+
+        throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
+
+    }
+
 }

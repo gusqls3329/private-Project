@@ -31,4 +31,10 @@ public class UserController {
         return service.postSignin(http, dto);
     }
 
+    @PostMapping("/check")
+    @Operation(summary = "이메일 확인", description = "이메일 중복확인")
+    public ResVo checkEmail(String email){
+        return new ResVo(service.checkEmail(email));
+    }
+
 }

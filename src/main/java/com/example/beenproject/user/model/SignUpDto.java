@@ -39,7 +39,7 @@ public class SignUpDto {
     private String email;
 
     @NotNull(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
-    @Range(min = 2, max = 2, message = ErrorMessage.BAD_EMAIL_EX_MESSAGE)
+    @Range(min = 1, max = 1, message = ErrorMessage.BAD_EMAIL_EX_MESSAGE)
     private int isEmail;
 
     private MultipartFile pic;
