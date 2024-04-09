@@ -12,7 +12,6 @@ import java.util.List;
 @Builder
 public class SecurityPrincipal {
     private Long iuser;
-    private String auth;
 
     @Builder.Default
     private List<String> roles = new ArrayList<>();

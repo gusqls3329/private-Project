@@ -3,7 +3,9 @@ package com.example.beenproject.user;
 import com.example.beenproject.common.ResVo;
 import com.example.beenproject.user.model.SignUpDto;
 import com.example.beenproject.user.model.SinginDto;
+import com.example.beenproject.user.model.SinginVo;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +27,8 @@ public class UserController {
 
     @PostMapping("/signin")
     @Operation(summary = "로그인", description = "아이디 4글자이상 15글자 이하")
-    public ResVo postSignin(SinginDto dto){
-        return new ResVo(service.postSignin(dto));
+    public SinginVo postSignin(HttpServletResponse http, SinginDto dto){
+        return service.postSignin(http, dto);
     }
 
 }
