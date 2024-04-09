@@ -12,12 +12,11 @@ import com.example.beenproject.common.utils.MyFileUtils;
 import com.example.beenproject.eneities.User;
 import com.example.beenproject.eneities.enums.ProvideType;
 import com.example.beenproject.eneities.enums.UserStatus;
-import com.example.beenproject.user.jpa.UserRepository;
+import com.example.beenproject.user.UserRepository;
 import com.example.beenproject.user.model.SignUpDto;
 import com.example.beenproject.user.model.UserModel;
 import com.example.beenproject.user.model.UserSelDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.message.MultiformatMessage;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 
@@ -26,7 +25,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

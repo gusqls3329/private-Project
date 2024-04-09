@@ -2779,3 +2779,6 @@ Caused by: java.lang.IllegalStateException: Client id must not be empty.
 [2024-04-09 15:46:24 [32mINFO [0;39m restartedMain] [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] [36mTomcat started on port 8080 (http) with context path ''[0;39m
 [2024-04-09 15:46:24 [32mINFO [0;39m restartedMain] [com.example.beenproject.BeenProjectApplication] [36mStarted BeenProjectApplication in 0.765 seconds (process running for 2674.563)[0;39m
 [2024-04-09 15:46:24 [32mINFO [0;39m restartedMain] [org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener] [36mCondition evaluation unchanged[0;39m
+[2024-04-09 15:53:58 [32mINFO [0;39m SpringApplicationShutdownHook] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [36mClosing JPA EntityManagerFactory for persistence unit 'default'[0;39m
+[2024-04-09 15:53:58 [32mINFO [0;39m SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-3 - Shutdown initiated...[0;39m
+[2024-04-09 15:53:58 [32mINFO [0;39m SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-3 - Shutdown completed.[0;39m
