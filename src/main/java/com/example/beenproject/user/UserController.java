@@ -70,6 +70,12 @@ public class UserController {
         return new ResVo(service.putUser(dto));
     }
 
+    @PatchMapping
+    @Operation(summary = "유저탈퇴", description = "유저탈퇴")
+    public ResVo patchUser(@Validated DelUserDto dto){
+        return new ResVo(service.patchUser(dto));
+    }
+
     @PostMapping("/signout")
     public ResVo getSignOut(HttpServletResponse res){
         return new ResVo(service.getSignOut(res));

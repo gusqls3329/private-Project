@@ -185,6 +185,17 @@ public class UserService {
         repository.save(user);
         return Const.SUCCESS;
     }
+    public long patchUser(DelUserDto dto){
+        User user = repository.findByUid(dto.getUid());
+        String pass = passwordEncoder.encode(dto.getUpw());
+        dto.setUpw(pass);
+        if(user.getEmail().equals(dto.getEmail()) || user.getUpw().equals(dto.getUpw())){
+            throw new ClientException(ErrorCode.ILLEGAL_EX_MESSAGE);
+        }
+        user.setStatus(UserStatus.DELETED);
+        repository.save(user);
+        return Const.SUCCESS;
+    }
 
     public int getSignOut(HttpServletResponse res) {
         try {
