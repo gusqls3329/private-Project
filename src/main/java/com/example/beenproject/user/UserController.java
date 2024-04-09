@@ -23,13 +23,13 @@ public class UserController {
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입", description = "회원가입"
-    +"사진만 비 필수")
+    +"사진만 비 필수"+ "아이디 4글자이상 15글자 이하"+"비밀번호 8이상 15자이하")
     public ResVo postSignup(SignUpDto dto){
         return new ResVo(service.postSignup(dto));
     }
 
     @PostMapping("/signin")
-    @Operation(summary = "로그인", description = "아이디 4글자이상 15글자 이하")
+    @Operation(summary = "로그인", description = "아이디 4글자이상 15글자 이하"+"비밀번호 8이상 15자이하")
     public SinginVo postSignin(HttpServletResponse http, SinginDto dto){
         return service.postSignin(http, dto);
     }
