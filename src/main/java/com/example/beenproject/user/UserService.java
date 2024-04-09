@@ -3,7 +3,9 @@ package com.example.beenproject.user;
 import com.example.beenproject.common.*;
 import com.example.beenproject.common.exception.base.BadInformationException;
 import com.example.beenproject.common.exception.checked.FileNotContainsDotException;
+import com.example.beenproject.common.security.AuthenticationFacade;
 import com.example.beenproject.common.security.JwtTokenProvider;
+import com.example.beenproject.common.security.SecurityUserDetails;
 import com.example.beenproject.common.security.model.SecurityPrincipal;
 import com.example.beenproject.common.utils.CookieUtils;
 import com.example.beenproject.common.utils.MyFileUtils;
@@ -13,14 +15,18 @@ import com.example.beenproject.eneities.enums.UserStatus;
 import com.example.beenproject.user.model.SignUpDto;
 import com.example.beenproject.user.model.SinginDto;
 import com.example.beenproject.user.model.SinginVo;
+import com.example.beenproject.user.model.UserFirebaseTokenPatchDto;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import jakarta.servlet.http.Cookie;
 import org.springframework.stereotype.Service;
 
-import static com.example.beenproject.common.exception.ErrorMessage.BAD_PIC_EX_MESSAGE;
-import static com.example.beenproject.common.exception.ErrorMessage.ILLEGAL_EX_MESSAGE;
+import java.util.Optional;
+
+import static com.example.beenproject.common.exception.ErrorMessage.*;
 
 @Slf4j
 @Service
@@ -32,7 +38,7 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final SecurityProperties securityProperties;
     private final CookieUtils cookieUtils;
-
+    private final AuthenticationFacade authenticationFacade;
 
     public long postSignup(SignUpDto dto) {
 
@@ -106,5 +112,39 @@ public class UserService {
         throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
 
     }
+
+    public ResVo patchToken(UserFirebaseTokenPatchDto dto) {
+
+        dto.setIuser(authenticationFacade.getLoginUserPk().intValue());
+        return new ResVo(mapper.patchToken(dto));
+    }
+
+    public int getSignOut(HttpServletResponse res) {
+        try {
+            cookieUtils.deleteCookie(res, "rt");
+        } catch (NullPointerException e) {
+            throw new BadInformationException(AUTHENTICATION_FAIL_EX_MESSAGE);
+        }
+        return 1;
+    }
+
+    public SinginVo getRefrechToken(HttpServletRequest req) {
+        Optional<Cookie> cookie = cookieUtils.getCookie(req, "rt");
+        String token = cookie.get().getValue();
+        if (!jwtTokenProvider.isValidatedToken(token)) {
+            return SinginVo.builder()
+                    .result(Const.FAIL)
+                    .accesstoken(null)
+                    .build();
+        }
+        SecurityUserDetails UserDetails = (SecurityUserDetails) jwtTokenProvider.getUserDetailsFromToken(token);
+        SecurityPrincipal Principal = UserDetails.getSecurityPrincipal();
+        String at = jwtTokenProvider.generateAccessToken(Principal);
+
+        return SinginVo.builder()
+                .result(Const.SUCCESS)
+                .accesstoken(at).build();
+    }
+
 
 }
