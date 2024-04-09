@@ -12,14 +12,14 @@ import com.example.beenproject.common.utils.MyFileUtils;
 import com.example.beenproject.eneities.User;
 import com.example.beenproject.eneities.enums.ProvideType;
 import com.example.beenproject.eneities.enums.UserStatus;
-import com.example.beenproject.user.model.SignUpDto;
-import com.example.beenproject.user.model.SinginDto;
-import com.example.beenproject.user.model.SinginVo;
-import com.example.beenproject.user.model.UserFirebaseTokenPatchDto;
+import com.example.beenproject.user.model.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import jakarta.servlet.http.Cookie;
 import org.springframework.stereotype.Service;
@@ -113,7 +113,12 @@ public class UserService {
 
     }
 
-
+    public FindUidVo getFindUid(String email){
+        User user = repository.findByEmail(email);
+        FindUidVo vo = new FindUidVo();
+        vo.setUid(user.getUid());
+        return vo;
+    }
 
     public int getSignOut(HttpServletResponse res) {
         try {
