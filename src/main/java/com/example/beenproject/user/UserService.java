@@ -113,10 +113,11 @@ public class UserService {
 
     }
 
-    public ResVo patchToken(UserFirebaseTokenPatchDto dto) {
-
-        dto.setIuser(authenticationFacade.getLoginUserPk().intValue());
-        return new ResVo(mapper.patchToken(dto));
+    public long patchToken(UserFirebaseTokenPatchDto dto) {
+        User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
+        user.setFirebaseToken(dto.getFirebaseToken());
+        repository.save(user);
+        return Const.SUCCESS;
     }
 
     public int getSignOut(HttpServletResponse res) {
@@ -146,5 +147,10 @@ public class UserService {
                 .accesstoken(at).build();
     }
 
-
+    public long patchUserFirebaseToken(UserFirebaseTokenPatchDto dto) { //FirebaseToken을 발급 : Firebase방식 : 메시지를 보낼때 ip대신 고유값(Firebase)을 가지고 있는사람에게 메시지 전달
+        User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
+        user.setFirebaseToken(dto.getFirebaseToken());
+        repository.save(user);
+        return Const.SUCCESS;
+    }
 }

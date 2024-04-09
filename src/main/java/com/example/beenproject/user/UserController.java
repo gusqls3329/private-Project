@@ -49,7 +49,7 @@ public class UserController {
     @PatchMapping("/fcm")
     public ResVo patchToken(UserFirebaseTokenPatchDto dto) {
 
-        return service.patchToken(dto);
+        return new ResVo(service.patchToken(dto));
     }
 
     @PostMapping("/signout")
@@ -64,7 +64,7 @@ public class UserController {
 
     @PatchMapping("/firebase-token")
     public ResVo patchUserFirebaseToken(@RequestBody UserFirebaseTokenPatchDto dto) {
-        return service.patchUserFirebaseToken(dto);
+        return new ResVo(service.patchUserFirebaseToken(dto));
     }
 
 }
