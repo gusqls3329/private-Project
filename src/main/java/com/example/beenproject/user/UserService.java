@@ -113,12 +113,7 @@ public class UserService {
 
     }
 
-    public long patchToken(UserFirebaseTokenPatchDto dto) {
-        User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
-        user.setFirebaseToken(dto.getFirebaseToken());
-        repository.save(user);
-        return Const.SUCCESS;
-    }
+
 
     public int getSignOut(HttpServletResponse res) {
         try {

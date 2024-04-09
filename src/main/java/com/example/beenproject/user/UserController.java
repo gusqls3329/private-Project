@@ -41,16 +41,7 @@ public class UserController {
         return new ResVo(service.checkEmail(email));
     }
 
-    @Operation(summary = "fireBaseToken 등록", description = "발급받은 해당 유저의 브라우저에 발급된 " +
-            "fireBaseToken 을 로그인한 유저에 등록")
-    @Parameters(value = {
-            @Parameter(name = "firebaseToken", description = "토큰값")
-    })
-    @PatchMapping("/fcm")
-    public ResVo patchToken(UserFirebaseTokenPatchDto dto) {
 
-        return new ResVo(service.patchToken(dto));
-    }
 
     @PostMapping("/signout")
     public ResVo getSignOut(HttpServletResponse res){
@@ -61,7 +52,11 @@ public class UserController {
     public SinginVo getRefrechToken(HttpServletRequest req){
         return service.getRefrechToken(req);
     }
-
+    @Operation(summary = "fireBaseToken 등록", description = "발급받은 해당 유저의 브라우저에 발급된 " +
+            "fireBaseToken 을 로그인한 유저에 등록")
+    @Parameters(value = {
+            @Parameter(name = "firebaseToken", description = "토큰값")
+    })
     @PatchMapping("/firebase-token")
     public ResVo patchUserFirebaseToken(@RequestBody UserFirebaseTokenPatchDto dto) {
         return new ResVo(service.patchUserFirebaseToken(dto));
