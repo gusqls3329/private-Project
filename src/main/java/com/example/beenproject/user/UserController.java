@@ -47,7 +47,7 @@ public class UserController {
         return new ResVo(service.checkEmail(email));
     }
 
-    @PostMapping("/id")
+    @GetMapping("/id")
     @Operation(summary = "아이디 찾기", description = "이메일을 통한 아이디 찾기")
     @Validated
     public FindUidVo getFindUid(@Length(max = 30, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
@@ -57,12 +57,17 @@ public class UserController {
         return service.getFindUid(email);
     }
 
-    @PostMapping("/pw")
+    @GetMapping("/pw")
     @Operation(summary = "비밀번호 변경", description = "이메일,아이디를 통한 비밀번호 변경")
     public ResVo getFindUpw(@Validated FindUpwDto dto){
         return new ResVo(service.getFindUpw(dto));
     }
 
+    @PutMapping
+    @Operation(summary = "수정", description = "사진 or 이메일만 수정가능하며 2개중 하나는 무조건 하나는 필수, 이메일은 중복확인 되어야함")
+    public ResVo putUser(@Validated PutUserDto dto){
+        return new ResVo(service.putUser(dto));
+    }
 
     @PostMapping("/signout")
     public ResVo getSignOut(HttpServletResponse res){

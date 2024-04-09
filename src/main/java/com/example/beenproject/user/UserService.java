@@ -16,7 +16,6 @@ import com.example.beenproject.user.model.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Length;
@@ -26,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import static com.example.beenproject.common.exception.ErrorMessage.*;
 
@@ -114,16 +114,16 @@ public class UserService {
 
     }
 
-    public FindUidVo getFindUid(String email){
+    public FindUidVo getFindUid(String email) {
         User user = repository.findByEmail(email);
         FindUidVo vo = new FindUidVo();
         vo.setUid(user.getUid());
         return vo;
     }
 
-    public long getFindUpw(FindUpwDto dto){
+    public long getFindUpw(FindUpwDto dto) {
         User user = repository.findByUidAndEmail(dto.getUid(), dto.getEmail());
-        if(user ==null){
+        if (user == null) {
             throw new ClientException(ErrorMessage.NO_SUCH_USER_EX_MESSAGE);
         }
         String pass = passwordEncoder.encode(dto.getUpw());
@@ -132,6 +132,58 @@ public class UserService {
         return Const.SUCCESS;
     }
 
+    public long putUser(PutUserDto dto) {
+        if (dto.getEmail() == null && dto.getPic() == null) {
+            throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
+        }
+        if (dto.getEmail() != null) {
+            if (dto.getIsEmail() != 1) {
+                throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
+            }
+            String pattern = "\\w+@\\w+\\.\\w+(\\.\\w+)?";
+            if (!Pattern.matches(dto.getEmail(), pattern) || dto.getEmail().length() < 30) {
+                throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
+            }
+            User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
+            user.setEmail(dto.getEmail());
+
+            if (dto.getPic().isEmpty()) {
+                repository.save(user);
+                return Const.SUCCESS;
+            }
+
+            String path = "user" + "/" + authenticationFacade.getLoginUser();
+            myFileUtils.delFolderTrigger(path);
+            String savedPicFileNm = null;
+            try {
+                savedPicFileNm = String.valueOf(
+                        myFileUtils.savePic(dto.getPic(), "user",
+                                String.valueOf(authenticationFacade.getLoginUser())));
+                dto.setChPic(savedPicFileNm);
+            } catch (FileNotContainsDotException e) {
+                throw new RuntimeException(e);
+            }
+            user.setPic(dto.getChPic());
+            repository.save(user);
+            return Const.SUCCESS;
+
+        }
+        User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
+        String path = "user" + "/" + authenticationFacade.getLoginUser();
+        myFileUtils.delFolderTrigger(path);
+        String savedPicFileNm = null;
+        try {
+            savedPicFileNm = String.valueOf(
+                    myFileUtils.savePic(dto.getPic(), "user",
+                            String.valueOf(authenticationFacade.getLoginUser())));
+            dto.setChPic(savedPicFileNm);
+        } catch (FileNotContainsDotException e) {
+            throw new RuntimeException(e);
+        }
+        user.setPic(dto.getChPic());
+        repository.save(user);
+        return Const.SUCCESS;
+    }
 
     public int getSignOut(HttpServletResponse res) {
         try {
