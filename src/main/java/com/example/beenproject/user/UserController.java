@@ -60,19 +60,19 @@ public class UserController {
 
     @GetMapping("/pw")
     @Operation(summary = "비밀번호 변경", description = "이메일,아이디를 통한 비밀번호 변경")
-    public ResVo getFindUpw(@Validated FindUpwDto dto){
+    public ResVo getFindUpw(@Validated @RequestBody  FindUpwDto dto){
         return new ResVo(service.getFindUpw(dto));
     }
 
     @PutMapping
     @Operation(summary = "수정", description = "사진 or 이메일만 수정가능하며 2개중 하나는 무조건 하나는 필수, 이메일은 중복확인 되어야함")
-    public ResVo putUser(@Validated PutUserDto dto){
+    public ResVo putUser(@Validated @RequestBody PutUserDto dto){
         return new ResVo(service.putUser(dto));
     }
 
     @PatchMapping
     @Operation(summary = "유저탈퇴", description = "유저탈퇴")
-    public ResVo patchUser(@Validated DelUserDto dto){
+    public ResVo patchUser(@Validated @RequestBody DelUserDto dto){
         return new ResVo(service.patchUser(dto));
     }
 
