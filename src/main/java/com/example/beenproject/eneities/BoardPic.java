@@ -14,6 +14,7 @@ import lombok.Setter;
 @Entity
 public class BoardPic extends CreatedAt {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BIGINT UNSIGNED")
     private Long BoardPic;
 

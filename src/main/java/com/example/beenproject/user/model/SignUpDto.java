@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class SignUpDto {
     @JsonIgnore
-    private int iuser;
+    private Long iuser;
     @JsonIgnore
     private String chPic;
     @JsonIgnore

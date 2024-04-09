@@ -15,6 +15,7 @@ import lombok.Setter;
 @Entity
 public class Dispute extends CreatedAt {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BIGINT UNSIGNED")
     private Long idispute;
 

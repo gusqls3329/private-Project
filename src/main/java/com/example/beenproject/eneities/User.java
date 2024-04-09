@@ -17,7 +17,8 @@ import lombok.Setter;
 @Entity
 public class User extends BaseAt {
     @Id
-    @Column(columnDefinition = "BIGINT UNSIGNED")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "BIGINT UNSIGNED", nullable = false)
     private Long iuser;
 
     @Column(columnDefinition = "VARCHAR(10)")

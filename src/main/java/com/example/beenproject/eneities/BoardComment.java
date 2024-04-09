@@ -15,6 +15,7 @@ import lombok.Setter;
 @Entity
 public class BoardComment extends BaseAt {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BIGINT UNSIGNED")
     private Long icomment;
 

@@ -14,6 +14,7 @@ import lombok.Setter;
 @Entity
 public class CompulsionBoard {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BIGINT UNSIGNED")
     private Long iresolvedBoard;
 

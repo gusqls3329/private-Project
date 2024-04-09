@@ -66,6 +66,7 @@ public class UserService {
         user.setStatus(UserStatus.ACTIVE);
         user.setUid(dto.getUid());
         user.setUpw(dto.getUpw());
+        user.setIuser(dto.getIuser());
         user.setProvideType(ProvideType.LOCAL);
         repository.save(user);
         return Const.SUCCESS;
