@@ -6,6 +6,7 @@ import com.example.beenproject.user.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotBlank;
@@ -46,7 +47,7 @@ public class UserController {
     public ResVo checkEmail(@Length(max = 30, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
                                 @Pattern(regexp = "\\w+@\\w+\\.\\w+(\\.\\w+)?", message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
                                 @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
-                                String email){
+                                @RequestParam String email){
         return new ResVo(service.checkEmail(email));
     }
 
@@ -56,13 +57,14 @@ public class UserController {
     public FindUidVo getFindUid(@Length(max = 30, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
                                     @Pattern(regexp = "\\w+@\\w+\\.\\w+(\\.\\w+)?", message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
                                     @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
+                                    @Schema(defaultValue = "bobo@naver.com")
                                     String email){
         return service.getFindUid(email);
     }
 
-    @GetMapping("/pw")
+    @PostMapping("/pw")
     @Operation(summary = "비밀번호 변경", description = "이메일,아이디를 통한 비밀번호 변경")
-    public ResVo getFindUpw(@Validated @RequestBody  FindUpwDto dto){
+    public ResVo getFindUpw(@Validated @RequestBody FindUpwDto dto){
         return new ResVo(service.getFindUpw(dto));
     }
 

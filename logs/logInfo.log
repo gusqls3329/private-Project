@@ -4519,3 +4519,6 @@ com.example.beenproject.common.ClientException: 존재하지 않는 아이디입
 [2024-04-11 14:59:50 [33mWARN [0;39m http-nio-8080-exec-1] [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver] [36mResolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported][0;39m
 [2024-04-11 14:59:53 [33mWARN [0;39m http-nio-8080-exec-5] [org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver] [36mResolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported][0;39m
 [2024-04-11 14:59:59 [32mINFO [0;39m http-nio-8080-exec-1] [org.springdoc.api.AbstractOpenApiResource] [36mInit duration for springdoc-openapi is: 311 ms[0;39m
+[2024-04-11 15:12:10 [32mINFO [0;39m SpringApplicationShutdownHook] [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] [36mClosing JPA EntityManagerFactory for persistence unit 'default'[0;39m
+[2024-04-11 15:12:10 [32mINFO [0;39m SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-1 - Shutdown initiated...[0;39m
+[2024-04-11 15:12:10 [32mINFO [0;39m SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-1 - Shutdown completed.[0;39m

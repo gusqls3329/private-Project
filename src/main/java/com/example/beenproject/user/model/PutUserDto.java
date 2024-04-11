@@ -22,6 +22,10 @@ public class PutUserDto {
     @Schema(defaultValue = "1")
     private int isEmail;
 
+    @Length(min = 8, max = 20, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
+    @Schema(defaultValue = "bobo1234")
+    private String upw;
+
     @JsonIgnore
     private MultipartFile pic;
     @JsonIgnore

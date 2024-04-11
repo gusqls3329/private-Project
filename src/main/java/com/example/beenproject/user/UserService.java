@@ -110,13 +110,14 @@ public class UserService {
         if (user == null || user.getStatus() == UserStatus.DELETED) {
             return Const.SUCCESS;
         }
-
-        throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
-
+        throw new ClientException(ErrorCode.BAD_EMAIL_EX_MESSAGE);
     }
 
     public FindUidVo getFindUid(String email) {
         User user = repository.findByEmail(email);
+        if(user==null){
+            throw new ClientException(ErrorMessage.ILLEGAL_UID_MESSAGE);
+        }
         FindUidVo vo = new FindUidVo();
         vo.setUid(user.getUid());
         return vo;
@@ -134,15 +135,17 @@ public class UserService {
     }
 
     public long putUser(PutUserDto dto) {
-        if (dto.getEmail() == null && dto.getPic() == null) {
+        if (dto.getEmail() == null && dto.getPic() == null &&dto.getUpw() == null) {
             throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
+        }
+        User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
+        if(dto.getUpw() != null){
+            user.setUpw(passwordEncoder.encode(dto.getUpw()));
         }
         if (dto.getEmail() != null) {
             if (dto.getIsEmail() != 1) {
                 throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
             }
-
-            User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
             user.setEmail(dto.getEmail());
 
             if (dto.getPic() ==null || !dto.getPic().isEmpty()) {
@@ -167,7 +170,6 @@ public class UserService {
             }
         }
 
-            User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
             String path = "user" + "/" + authenticationFacade.getLoginUser();
             myFileUtils.delFolderTrigger(path);
             String savedPicFileNm = null;
@@ -186,9 +188,10 @@ public class UserService {
     }
     public long patchUser(DelUserDto dto){
         User user = repository.findByUid(dto.getUid());
-        String pass = passwordEncoder.encode(dto.getUpw());
-        dto.setUpw(pass);
-        if(user.getEmail().equals(dto.getEmail()) || user.getUpw().equals(dto.getUpw())){
+        if(user == null ){
+            throw new ClientException(ErrorCode.ILLEGAL_UID_MESSAGE);
+        }
+        if(user.getEmail().equals(dto.getEmail()) || passwordEncoder.matches(dto.getUpw(), user.getUpw())){
             throw new ClientException(ErrorCode.ILLEGAL_EX_MESSAGE);
         }
         user.setStatus(UserStatus.DELETED);

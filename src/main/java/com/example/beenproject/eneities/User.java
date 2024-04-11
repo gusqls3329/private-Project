@@ -39,7 +39,7 @@ public class User extends BaseAt {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @Column(columnDefinition = "VARCHAR(100)")
+    @Column(columnDefinition = "VARCHAR(1000)")
     private String pic;
 
     @Column(length = 2100, name = "firebase_token")
