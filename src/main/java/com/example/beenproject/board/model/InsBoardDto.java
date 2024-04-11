@@ -13,11 +13,11 @@ import java.util.List;
 @Data
 public class InsBoardDto {
     @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
-    @Length(min = 2, max = 50)
+    @Length(min = 2, max = 50, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
     private String title;
 
     @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
-    @Length(min = 2, max = 5000)
+    @Length(min = 2, max = 5000, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
     private String contents;
 
     @JsonIgnore

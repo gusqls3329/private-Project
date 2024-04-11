@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +31,12 @@ public class BoardController {
     @Validated
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResVo postBoard(@RequestPart @NotNull(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
-                               MultipartFile mainPic,
-                           @RequestPart (required = false)
+                           MultipartFile mainPic,
+                           @RequestPart(required = false)
                            @Size(max = 4)
                            List<MultipartFile> pics,
-                           @RequestPart InsBoardDto dto
-                            ){
+                           @RequestPart @Validated InsBoardDto dto
+    ) {
         dto.setMainPic(mainPic);
         dto.setPics(pics);
         return new ResVo(service.postBoard(dto));
@@ -55,8 +57,7 @@ public class BoardController {
                                     @RequestParam(name = "search", required = false)
                                     String search,
                                     @RequestParam(name = "type", required = false)
-                                    Integer type)
-    {
+                                    Integer type) {
         BoardListDto dto = BoardListDto.builder()
                 .page(page)
                 .search(search)
@@ -65,21 +66,25 @@ public class BoardController {
                 .build();
         return service.getBoardList(dto);
     }
+
     @Operation(summary = "게시글 상세", description = "특정 게시글 입장")
-    @Parameters(value = {
-            @Parameter(name = "iboard", description = "게시글pk")})
+    @Validated
     @GetMapping("/{iboard}")
-    public BoradVo getBoard(@PathVariable int iboard) {
+    public BoradVo getBoard(@Length(min = 1, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
+                            @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
+                            @PathVariable int iboard) {
         return service.getBoard(iboard);
     }
+
     @Operation(summary = "게시글 수정", description = "로그인 한 유저가 작성한 게시글 수정")
+    @Validated
     @PutMapping
     public ResVo putBoard(@RequestPart(required = false)
-                              MultipartFile mainPic,
-                          @RequestPart (required = false)
-                              @Size(max = 4)
-                              List<MultipartFile> pics,
-                          PutBoardDto dto){
+                          MultipartFile mainPic,
+                          @RequestPart(required = false)
+                          @Size(max = 4)
+                          List<MultipartFile> pics,
+                          @RequestPart @Validated PutBoardDto dto) {
 
         dto.setPics(pics);
         dto.setMainPic(mainPic);
@@ -87,14 +92,20 @@ public class BoardController {
     }
 
     @Operation(summary = "게시글 삭제", description = "로그인 한 유저가 작성한 게시글 삭제 ")
+    @Validated
     @DeleteMapping("/{iboard}")
-    public ResVo delUserBoard(@PathVariable int iboard){
+    public ResVo delUserBoard(@NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
+                              @Length(min = 1, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
+                              @PathVariable int iboard) {
         return new ResVo(service.delUserBoard(iboard));
     }
 
     @Operation(summary = "게시글 좋아요", description = "좋아요 토글 ")
+    @Validated
     @GetMapping("/like/{iboard}")
-    public ResVo toggleLike(@PathVariable int iboard){
+    public ResVo toggleLike(@NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
+                                @Length(min = 1, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
+                                @PathVariable int iboard) {
         return new ResVo(service.toggleLike(iboard));
     }
 
