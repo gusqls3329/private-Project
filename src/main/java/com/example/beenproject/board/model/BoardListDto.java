@@ -34,7 +34,7 @@ public class BoardListDto {
     private int startIdx;
 
     @JsonIgnore
-    private int rowCount = 12;
+    private int rowCount = 30;
 
     public void setPage(int page) {
         this.startIdx = (page-1) * this.rowCount;
