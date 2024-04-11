@@ -1,5 +1,6 @@
 package com.example.beenproject.board;
 
+import com.example.beenproject.board.model.BoardListDto;
 import com.example.beenproject.board.model.BoardListVo;
 import com.example.beenproject.board.model.InsBoardDto;
 import com.example.beenproject.common.ErrorMessage;
@@ -66,8 +67,16 @@ public class BoardController {
                                     @RequestParam(name = "type", required = false)
                                     Integer type)
     {
-
+        BoardListDto dto = BoardListDto.builder()
+                .page(page)
+                .search(search)
+                .type(type)
+                .sort(sort)
+                .build();
+        return service.getBoardList(dto);
     }
+
+
 
 
 
