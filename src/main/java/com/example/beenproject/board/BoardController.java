@@ -2,6 +2,7 @@ package com.example.beenproject.board;
 
 import com.example.beenproject.board.model.BoardListDto;
 import com.example.beenproject.board.model.BoardListVo;
+import com.example.beenproject.board.model.BoradVo;
 import com.example.beenproject.board.model.InsBoardDto;
 import com.example.beenproject.common.ErrorMessage;
 import com.example.beenproject.common.ResVo;
@@ -75,7 +76,13 @@ public class BoardController {
                 .build();
         return service.getBoardList(dto);
     }
-
+    @Operation(summary = "게시글 상세", description = "특정 게시글 입장")
+    @Parameters(value = {
+            @Parameter(name = "iboard", description = "게시글pk")})
+    @GetMapping("/{iboard}")
+    public BoradVo getBoard(@PathVariable int iboard) {
+        return service.getBoard(iboard);
+    }
 
 
 

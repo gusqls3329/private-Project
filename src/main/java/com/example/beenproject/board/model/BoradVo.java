@@ -4,14 +4,13 @@ import com.example.beenproject.eneities.enums.BoardStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-public class BoardList {
+public class BoradVo {
     private String nick;
 
     private String userPic;
-
-    private Long boardLikeCnt;
 
     private Long isLiked;
 
@@ -24,4 +23,9 @@ public class BoardList {
     private BoardStatus status;
 
     private LocalDateTime createAt;
+
+    private List<BoardPics> pics;
+
+    private List<BoardComment> comments;
+
 }
