@@ -38,6 +38,6 @@ public class BoardService {
     }
 
     public long toggleLike(int iboard){
-
+        return 0;
     }
 }

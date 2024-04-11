@@ -95,9 +95,7 @@ public class BoardController {
     @Operation(summary = "게시글 좋아요", description = "좋아요 토글 ")
     @GetMapping("/like/{iboard}")
     public ResVo toggleLike(@PathVariable int iboard){
-
+        return new ResVo(service.toggleLike(iboard));
     }
-
-
 
 }
