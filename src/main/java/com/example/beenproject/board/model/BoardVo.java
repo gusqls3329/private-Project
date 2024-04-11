@@ -1,13 +1,15 @@
 package com.example.beenproject.board.model;
 
 import com.example.beenproject.eneities.enums.BoardStatus;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class BoradVo {
+@Builder
+public class BoardVo {
     private String nick;
 
     private String userPic;

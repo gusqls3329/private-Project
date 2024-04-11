@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class BoardPics {
-    private Long boardPic;
+    private Long iboardPic;
 
     private String storedPic;
 }

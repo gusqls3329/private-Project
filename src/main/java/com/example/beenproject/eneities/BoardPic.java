@@ -16,7 +16,7 @@ public class BoardPic extends CreatedAt {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "BIGINT UNSIGNED")
-    private Long BoardPic;
+    private Long iboardPic;
 
     @ManyToOne
     @JoinColumn(name = "iboard", nullable = false)

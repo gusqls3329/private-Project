@@ -70,9 +70,9 @@ public class BoardController {
     @Operation(summary = "게시글 상세", description = "특정 게시글 입장")
     @Validated
     @GetMapping("/{iboard}")
-    public BoradVo getBoard(@Length(min = 1, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
+    public BoardVo getBoard(@Length(min = 1, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
                             @NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
-                            @PathVariable int iboard) {
+                            @PathVariable Long iboard) {
         return service.getBoard(iboard);
     }
 
@@ -96,7 +96,7 @@ public class BoardController {
     @DeleteMapping("/{iboard}")
     public ResVo delUserBoard(@NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
                               @Length(min = 1, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
-                              @PathVariable int iboard) {
+                              @PathVariable Long iboard) {
         return new ResVo(service.delUserBoard(iboard));
     }
 
@@ -105,7 +105,7 @@ public class BoardController {
     @GetMapping("/like/{iboard}")
     public ResVo toggleLike(@NotBlank(message = ErrorMessage.CAN_NOT_BLANK_EX_MESSAGE)
                                 @Length(min = 1, message = ErrorMessage.ILLEGAL_PROMISE_EX_MESSAGE)
-                                @PathVariable int iboard) {
+                                @PathVariable Long iboard) {
         return new ResVo(service.toggleLike(iboard));
     }
 
