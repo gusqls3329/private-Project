@@ -1,5 +1,7 @@
 package com.example.beenproject.board.model;
 
+import com.example.beenproject.eneities.BoardComment;
+import com.example.beenproject.eneities.BoardPic;
 import com.example.beenproject.eneities.enums.BoardStatus;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +28,7 @@ public class BoardVo {
 
     private LocalDateTime createAt;
 
-    private List<BoardPics> pics;
+    private List<BoardPic> pics;
 
     private List<BoardComment> comments;
 
