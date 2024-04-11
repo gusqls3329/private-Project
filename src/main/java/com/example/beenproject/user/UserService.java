@@ -2,6 +2,7 @@ package com.example.beenproject.user;
 
 import com.example.beenproject.common.*;
 import com.example.beenproject.common.exception.base.BadInformationException;
+import com.example.beenproject.common.exception.base.NoSuchDataException;
 import com.example.beenproject.common.exception.checked.FileNotContainsDotException;
 import com.example.beenproject.common.security.AuthenticationFacade;
 import com.example.beenproject.common.security.JwtTokenProvider;
@@ -74,13 +75,12 @@ public class UserService {
 
     public SinginVo postSignin(HttpServletResponse http, SinginDto dto) {
         User user = repository.findByUid(dto.getUid());
-        String pass = passwordEncoder.encode(dto.getUpw());
 
         if (user == null) {
             throw new ClientException(ErrorMessage.ILLEGAL_UID_MESSAGE);
         }
-        if (!pass.equals(user.getUpw())) {
-            throw new ClientException(ErrorMessage.ILLEGAL_UPW_MESSAGE);
+        if (!passwordEncoder.matches(dto.getUpw(), user.getUpw())) {
+            throw new NoSuchDataException(NO_SUCH_PASSWORD_EX_MESSAGE);
         }
         if (user.getStatus() != UserStatus.ACTIVE) {
             throw new ClientException(ErrorMessage.NO_SUCH_USER_EX_MESSAGE);

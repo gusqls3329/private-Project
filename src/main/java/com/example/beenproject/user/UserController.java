@@ -64,7 +64,7 @@ public class UserController {
         return new ResVo(service.getFindUpw(dto));
     }
 
-    @PutMapping
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "수정", description = "사진 or 이메일만 수정가능하며 2개중 하나는 무조건 하나는 필수, 이메일은 중복확인 되어야함")
     public ResVo putUser(@Validated @RequestBody PutUserDto dto){
         return new ResVo(service.putUser(dto));
