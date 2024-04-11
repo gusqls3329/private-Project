@@ -48,5 +48,6 @@ public class SignUpDto {
     @Schema(defaultValue = "1")
     private int isEmail;
 
+    @JsonIgnore
     private MultipartFile pic;
 }

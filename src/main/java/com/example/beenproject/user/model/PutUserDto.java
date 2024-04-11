@@ -19,10 +19,10 @@ public class PutUserDto {
     @Schema(defaultValue = "bobo@naver.com")
     private String email;
 
-    @Range(min = 1, max = 1, message = ErrorMessage.BAD_EMAIL_EX_MESSAGE)
     @Schema(defaultValue = "1")
     private int isEmail;
 
+    @JsonIgnore
     private MultipartFile pic;
     @JsonIgnore
     private String chPic;

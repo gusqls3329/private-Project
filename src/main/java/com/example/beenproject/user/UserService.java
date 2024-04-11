@@ -2,7 +2,6 @@ package com.example.beenproject.user;
 
 import com.example.beenproject.common.*;
 import com.example.beenproject.common.exception.base.BadInformationException;
-import com.example.beenproject.common.exception.base.NoSuchDataException;
 import com.example.beenproject.common.exception.checked.FileNotContainsDotException;
 import com.example.beenproject.common.security.AuthenticationFacade;
 import com.example.beenproject.common.security.JwtTokenProvider;
@@ -75,12 +74,13 @@ public class UserService {
 
     public SinginVo postSignin(HttpServletResponse http, SinginDto dto) {
         User user = repository.findByUid(dto.getUid());
+        String pass = passwordEncoder.encode(dto.getUpw());
 
         if (user == null) {
             throw new ClientException(ErrorMessage.ILLEGAL_UID_MESSAGE);
         }
         if (!passwordEncoder.matches(dto.getUpw(), user.getUpw())) {
-            throw new NoSuchDataException(NO_SUCH_PASSWORD_EX_MESSAGE);
+            throw new ClientException(ErrorMessage.ILLEGAL_UPW_MESSAGE);
         }
         if (user.getStatus() != UserStatus.ACTIVE) {
             throw new ClientException(ErrorMessage.NO_SUCH_USER_EX_MESSAGE);
@@ -141,18 +141,33 @@ public class UserService {
             if (dto.getIsEmail() != 1) {
                 throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
             }
-            String pattern = "\\w+@\\w+\\.\\w+(\\.\\w+)?";
-            if (!Pattern.matches(dto.getEmail(), pattern) || dto.getEmail().length() < 30) {
-                throw new ClientException(ErrorMessage.ILLEGAL_EX_MESSAGE);
-            }
+
             User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
             user.setEmail(dto.getEmail());
 
-            if (dto.getPic().isEmpty()) {
+            if (dto.getPic() ==null || !dto.getPic().isEmpty()) {
                 repository.save(user);
                 return Const.SUCCESS;
             }
+            if(dto.getPic() !=null && dto.getPic().isEmpty()) {
+                String path = "user" + "/" + authenticationFacade.getLoginUser();
+                myFileUtils.delFolderTrigger(path);
+                String savedPicFileNm = null;
+                try {
+                    savedPicFileNm = String.valueOf(
+                            myFileUtils.savePic(dto.getPic(), "user",
+                                    String.valueOf(authenticationFacade.getLoginUser())));
+                    dto.setChPic(savedPicFileNm);
+                } catch (FileNotContainsDotException e) {
+                    throw new RuntimeException(e);
+                }
+                user.setPic(dto.getChPic());
+                repository.save(user);
+                return Const.SUCCESS;
+            }
+        }
 
+            User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
             String path = "user" + "/" + authenticationFacade.getLoginUser();
             myFileUtils.delFolderTrigger(path);
             String savedPicFileNm = null;
@@ -168,22 +183,6 @@ public class UserService {
             repository.save(user);
             return Const.SUCCESS;
 
-        }
-        User user = repository.findByIuser(authenticationFacade.getLoginUserPk());
-        String path = "user" + "/" + authenticationFacade.getLoginUser();
-        myFileUtils.delFolderTrigger(path);
-        String savedPicFileNm = null;
-        try {
-            savedPicFileNm = String.valueOf(
-                    myFileUtils.savePic(dto.getPic(), "user",
-                            String.valueOf(authenticationFacade.getLoginUser())));
-            dto.setChPic(savedPicFileNm);
-        } catch (FileNotContainsDotException e) {
-            throw new RuntimeException(e);
-        }
-        user.setPic(dto.getChPic());
-        repository.save(user);
-        return Const.SUCCESS;
     }
     public long patchUser(DelUserDto dto){
         User user = repository.findByUid(dto.getUid());

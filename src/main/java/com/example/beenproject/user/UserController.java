@@ -16,6 +16,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -27,7 +28,8 @@ public class UserController {
     @PostMapping(value = "/signup", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "회원가입", description = "회원가입"
             +"사진만 비 필수"+ "아이디 4글자이상 15글자 이하"+"비밀번호 8이상 15자이하")
-    public ResVo postSignup(@Validated @RequestBody SignUpDto dto){
+    public ResVo postSignup(@RequestPart(required = false) MultipartFile pic, @RequestPart @Validated SignUpDto dto){
+        dto.setPic(pic);
         return new ResVo(service.postSignup(dto));
     }
 
@@ -66,7 +68,8 @@ public class UserController {
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "수정", description = "사진 or 이메일만 수정가능하며 2개중 하나는 무조건 하나는 필수, 이메일은 중복확인 되어야함")
-    public ResVo putUser(@Validated @RequestBody PutUserDto dto){
+    public ResVo putUser(@RequestPart(required = false) MultipartFile pic, @RequestPart @Validated PutUserDto dto){
+        dto.setPic(pic);
         return new ResVo(service.putUser(dto));
     }
 
