@@ -86,7 +86,7 @@ public class BoardService {
         board.setContents(dto.getContents());}
 
         if(dto.getPics()!=null || !dto.getPics().isEmpty()){
-//
+// 작성
         }
 
         return 0;
