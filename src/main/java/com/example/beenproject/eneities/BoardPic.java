@@ -24,7 +24,5 @@ public class BoardPic extends CreatedAt {
 
     @Column
     private String storedPic;
-
-
-
+    //메인픽 고민
 }

@@ -34,11 +34,13 @@ public class BoardService {
         Board board = new Board();
         board.setContents(dto.getContents());
         board.setView(0L);
-        board.setContents(dto.getContents());
         board.setTitle(dto.getContents());
         User user =  userRepository.findByIuser(authenticationFacade.getLoginUserPk());
         board.setUser(user);
         repository.save(board);
+
+        BoardPic pic = new BoardPic();
+        pic.setBoard(board);
         return Const.SUCCESS;
     }
     public BoardListVo getBoardList(BoardListDto dto){
@@ -86,13 +88,13 @@ public class BoardService {
         board.setContents(dto.getContents());}
 
         if(dto.getPics()!=null || !dto.getPics().isEmpty()){
-// 작성
+
         }
 
         return 0;
     }
 
-    public long delUserBoard( Long iboard){
+    public long delUserBoard(Long iboard){
         return 0;
     }
 
